@@ -119,7 +119,7 @@ export default function ComingSoon() {
                 fontWeight: 'bold',
                 animation: 'textFlash 3s infinite'
               }}>
-                [ SOCIAL_FEED.ACCESS ]
+                <span style={{ whiteSpace: 'nowrap' }}>[ SOCIAL_FEED.ACCESS ]</span>
               </div>
               
               <div style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
