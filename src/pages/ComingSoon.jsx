@@ -69,7 +69,8 @@ export default function ComingSoon() {
             borderRadius: '0', 
             padding: '1rem', 
             minHeight: '500px',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            maxWidth: '100%' // Prevent mobile overflow
           }}>
             <a className="x-timeline"
               href="https://x.com/zalotlgames"
@@ -87,7 +88,7 @@ export default function ComingSoon() {
             color: 'var(--text)', 
             marginBottom: '1rem',
             fontSize: '1.5rem'
-          }}> TEAM_ROSTER.DAT</h3>
+          }}>TEAM_ROSTER.DAT</h3>
 
           <div className="team-card">
             <div style={{ 

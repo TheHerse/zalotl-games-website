@@ -306,3 +306,80 @@ ul.retro-list li::before {
 body {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect x="0" y="0" width="10" height="10" fill="%230088ff"/></svg>'), auto;
 }
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+/* Viewport meta tag needed in your index.html: <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
+@media (max-width: 768px) {
+  .glitch-tab {
+    width: 200px !important;
+    font-size: 10px;
+  }
+  
+  .glitch-tab-content {
+    min-height: 40px;
+  }
+  
+  .glitch-tab-close {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .browser-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-right: 2px;
+  }
+  
+  main {
+    padding: 1rem !important;
+  }
+  
+  .retro-btn {
+    padding: 12px 24px;
+    min-height: 44px;
+  }
+  
+  h1 {
+    font-size: 1.8rem !important;
+  }
+  
+  h2 {
+    font-size: 1.3rem !important;
+  }
+  
+  .browser-tab {
+    white-space: nowrap;
+  }
+  
+  img {
+    max-width: 300px !important;
+  }
+  
+  body::before {
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 136, 255, 0.05),
+      rgba(0, 136, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch-tab {
+    width: 160px !important;
+  }
+  
+  .window-frame {
+    padding: 15px !important;
+  }
+  
+  .retro-card {
+    padding: 15px !important;
+  }
+}

@@ -19,33 +19,40 @@ const MESSAGES = [
   "OVERFLOW: Input queue saturated"
 ];
 
+const MAX_TABS = 5; // Maximum glitch tabs allowed
+
 export default function GlitchManager() {
   const [tabs, setTabs] = useState([]);
 
   const spawnTab = () => {
-    const id = Date.now() + Math.random();
-    setTabs(prev => [...prev, {
-      id,
-      title: `GLITCH_${Math.floor(Math.random() * 999)}.ERR`,
-      message: MESSAGES[Math.floor(Math.random() * MESSAGES.length)],
-      initialPosition: {
-        x: Math.random() * (window.innerWidth - 250),
-        y: Math.random() * (window.innerHeight - 100)
-      }
-    }]);
+    setTabs(prev => {
+      // Don't spawn if at limit
+      if (prev.length >= MAX_TABS) return prev;
+      
+      const id = Date.now() + Math.random();
+      return [...prev, {
+        id,
+        title: `GLITCH_${Math.floor(Math.random() * 999)}.ERR`,
+        message: MESSAGES[Math.floor(Math.random() * MESSAGES.length)],
+        initialPosition: {
+          x: Math.random() * (window.innerWidth - 250),
+          y: Math.random() * (window.innerHeight - 100)
+        }
+      }];
+    });
   };
 
   const removeTab = (id) => {
     setTabs(prev => prev.filter(tab => tab.id !== id));
-    // Respawn after 3 seconds
+    // Respawn after 3 seconds (only if under limit)
     setTimeout(() => spawnTab(), 3000);
   };
 
   // Spawn initial tabs
   useEffect(() => {
-    // Spawn 3 tabs on load
+    // Spawn 3 tabs on load (or fewer if MAX_TABS is less)
     const timers = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < Math.min(3, MAX_TABS); i++) {
       timers.push(setTimeout(() => spawnTab(), i * 500));
     }
     
@@ -71,6 +78,7 @@ export default function GlitchManager() {
           title={tab.title}
           message={tab.message}
           initialPosition={tab.initialPosition}
+          onClose={removeTab}
         />
       ))}
     </>

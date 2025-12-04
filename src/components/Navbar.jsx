@@ -7,9 +7,15 @@ export default function Navbar() {
       top: 0, 
       zIndex: 100, 
       background: 'var(--bg)',
-      padding: '10px 20px 0 20px'
+      padding: '10px 20px 0 20px',
+      overflowX: 'auto',
+      WebkitOverflowScrolling: 'touch'
     }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'flex-end',
+        minWidth: 'max-content'
+      }}>
         <a href="/" className={`browser-tab ${currentPath === '/' ? 'active' : ''}`}>
           HOME
         </a>
