@@ -1,12 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ComingSoon() {
+  const [twitterError, setTwitterError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://platform.twitter.com/widgets.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+    // Detect mobile
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    // Load Twitter script
+    const loadTwitter = () => {
+      if (document.getElementById('twitter-wjs')) return;
+      
+      const script = document.createElement('script');
+      script.id = 'twitter-wjs';
+      script.src = 'https://platform.twitter.com/widgets.js';
+      script.async = true;
+      
+      script.onload = () => {
+        // Mobile: Force widget to render after load
+        if (window.twttr?.widgets && isMobile) {
+          setTimeout(() => {
+            window.twttr.widgets.load();
+          }, 1000);
+        }
+      };
+      
+      script.onerror = () => setTwitterError(true);
+      document.body.appendChild(script);
+    };
+
+    loadTwitter();
+
+    // Timeout: If widget doesn't render in 3s, show fallback
+    const timeout = setTimeout(() => {
+      if (!document.querySelector('.twitter-timeline-rendered')) {
+        setTwitterError(true);
+      }
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [isMobile]);
 
   return (
     <main style={{ 
@@ -48,7 +87,6 @@ export default function ComingSoon() {
         </header>
 
         <section>
-          {/* REMOVED: Button and flex container */}
           <h3 style={{ 
             color: 'var(--text)', 
             fontSize: '1.2rem',
@@ -58,23 +96,55 @@ export default function ComingSoon() {
             LIVE_FEEDS.LOG
           </h3>
           
-          <div style={{ 
-            background: 'var(--bg-secondary)', 
-            border: '1px solid var(--border-dim)', 
-            borderRadius: '0', 
-            padding: '1rem', 
-            minHeight: '500px',
-            overflow: 'hidden',
-            maxWidth: '100%'
-          }}>
-            <a className="x-timeline"
-              href="https://x.com/zalotlgames"
-              data-theme="dark"
-              data-tweet-limit="6"
-              data-chrome="noheader nofooter noborders transparent">
-              <div className="loading-blink">Loading posts from @zalotlgames...</div>
-            </a>
-          </div>
+          {!twitterError ? (
+            <div style={{ 
+              background: 'var(--bg-secondary)', 
+              border: '1px solid var(--border-dim)', 
+              borderRadius: '0', 
+              padding: '1rem', 
+              minHeight: '500px',
+              overflow: 'hidden',
+              maxWidth: '100%'
+            }}>
+              <a
+                className="x-timeline"
+                href="https://x.com/zalotlgames"
+                data-theme="dark"
+                data-tweet-limit="6"
+                data-chrome="noheader nofooter noborders transparent"
+                style={{ display: 'block', minHeight: '100%' }}
+              >
+                <div className="loading-blink">Loading posts from @zalotlgames...</div>
+              </a>
+            </div>
+          ) : (
+            // Fallback for mobile/ad-blocker
+            <div style={{ 
+              background: 'var(--bg-secondary)', 
+              border: '1px solid var(--border-dim)', 
+              borderRadius: '0', 
+              padding: '2rem',
+              textAlign: 'center',
+              color: 'var(--text-secondary)',
+              minHeight: '200px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}>
+              <div style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+                [ FEED_BLOCKED.MOBILE ]
+              </div>
+              <div style={{ marginBottom: '0.5rem' }}>
+                Content blocked by browser/privacy settings
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
+                Visit directly: <a href="https://x.com/zalotlgames" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}>x.com/zalotlgames</a>
+              </div>
+              <div style={{ fontSize: '0.9rem' }}>
+                [ Or check other social links in ABOUT.TXT ]
+              </div>
+            </div>
+          )}
         </section>
 
         {/* TEAM SECTION */}
