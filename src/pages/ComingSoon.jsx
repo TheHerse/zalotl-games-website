@@ -1,51 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ComingSoon() {
-  const [twitterError, setTwitterError] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [showFeed, setShowFeed] = useState(true);
 
   useEffect(() => {
-    // Detect mobile
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    // INSTANTLY hide on mobile (don't even try to load)
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      setShowFeed(false);
+      return;
+    }
 
-    // Load Twitter script
-    const loadTwitter = () => {
-      if (document.getElementById('twitter-wjs')) return;
-      
-      const script = document.createElement('script');
-      script.id = 'twitter-wjs';
-      script.src = 'https://platform.twitter.com/widgets.js';
-      script.async = true;
-      
-      script.onload = () => {
-        // Mobile: Force widget to render after load
-        if (window.twttr?.widgets && isMobile) {
-          setTimeout(() => {
-            window.twttr.widgets.load();
-          }, 1000);
-        }
-      };
-      
-      script.onerror = () => setTwitterError(true);
-      document.body.appendChild(script);
-    };
+    // Only attempt Twitter on desktop
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    
+    script.onerror = () => setShowFeed(false);
+    document.body.appendChild(script);
 
-    loadTwitter();
-
-    // Timeout: If widget doesn't render in 3s, show fallback
+    // Fallback if it doesn't render in 2s
     const timeout = setTimeout(() => {
       if (!document.querySelector('.twitter-timeline-rendered')) {
-        setTwitterError(true);
+        setShowFeed(false);
       }
-    }, 3000);
+    }, 2000);
 
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, [isMobile]);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <main style={{ 
@@ -96,7 +78,7 @@ export default function ComingSoon() {
             LIVE_FEEDS.LOG
           </h3>
           
-          {!twitterError ? (
+          {showFeed ? (
             <div style={{ 
               background: 'var(--bg-secondary)', 
               border: '1px solid var(--border-dim)', 
@@ -112,36 +94,58 @@ export default function ComingSoon() {
                 data-theme="dark"
                 data-tweet-limit="6"
                 data-chrome="noheader nofooter noborders transparent"
-                style={{ display: 'block', minHeight: '100%' }}
               >
                 <div className="loading-blink">Loading posts from @zalotlgames...</div>
               </a>
             </div>
           ) : (
-            // Fallback for mobile/ad-blocker
+            // CLEAN mobile fallback (not an error message)
             <div style={{ 
               background: 'var(--bg-secondary)', 
               border: '1px solid var(--border-dim)', 
               borderRadius: '0', 
-              padding: '2rem',
+              padding: '3rem 2rem',
               textAlign: 'center',
               color: 'var(--text-secondary)',
-              minHeight: '200px',
+              minHeight: '300px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              gap: '1.5rem'
             }}>
-              <div style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text)' }}>
-                [ FEED_BLOCKED.MOBILE ]
+              <div style={{ 
+                fontSize: '1.5rem', 
+                color: 'var(--text)', 
+                fontWeight: 'bold',
+                animation: 'textFlash 3s infinite'
+              }}>
+                [ SOCIAL_FEED.ACCESS ]
               </div>
-              <div style={{ marginBottom: '0.5rem' }}>
-                Content blocked by browser/privacy settings
+              
+              <div style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+                Follow for dev updates & sneak peeks
               </div>
-              <div style={{ marginBottom: '1rem' }}>
-                Visit directly: <a href="https://x.com/zalotlgames" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}>x.com/zalotlgames</a>
+
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                gap: '1rem', 
+                flexWrap: 'wrap',
+                margin: '1rem 0'
+              }}>
+                <a href="https://x.com/zalotlgames" target="_blank" rel="noreferrer" className="retro-btn">
+                  X / TWITTER
+                </a>
+                <a href="https://instagram.com/zalotlgames" target="_blank" rel="noreferrer" className="retro-btn">
+                  INSTAGRAM
+                </a>
+                <a href="https://tiktok.com/@zalotlgames" target="_blank" rel="noreferrer" className="retro-btn">
+                  TIKTOK
+                </a>
               </div>
-              <div style={{ fontSize: '0.9rem' }}>
-                [ Or check other social links in ABOUT.TXT ]
+
+              <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>
+                [ External links open in new tab ]
               </div>
             </div>
           )}
