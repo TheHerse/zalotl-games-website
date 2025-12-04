@@ -12,7 +12,7 @@ export default function Home() {
       <div className="window-frame retro-card" style={{ 
         textAlign: 'center', 
         padding: '3rem', 
-        maxWidth: '800px',
+        maxWidth: '500px',
         position: 'relative'
       }}>
         {/* Window title bar */}
@@ -29,7 +29,7 @@ export default function Home() {
           src="/logo2.png" 
           alt="Zalotl Games" 
           style={{ 
-            maxWidth: '600px', 
+            maxWidth: '400px', 
             margin: '2rem 0 1rem 0',
             filter: 'drop-shadow(0 0 10px var(--accent-glow))'
           }} 

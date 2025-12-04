@@ -31,7 +31,7 @@ export default function ComingSoon() {
             fontSize: '2.5rem', 
             marginBottom: '0.5rem',
             animation: 'rgb-split 4s infinite, textFlash 3s infinite'
-          }}>PROJECT: TOWER_DEFENSE</h1>
+          }}>PROJECT: MONSTER'S_KEEP</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem' }}>A tower defense game with a twist</p>
           <span style={{ 
             display: 'inline-block', 
@@ -56,7 +56,7 @@ export default function ComingSoon() {
             padding: '0 0.5rem'
           }}>
             <h3 style={{ color: 'var(--text)', fontSize: '1.2rem' }}>
-              📡 LIVE_FEEDS.LOG
+              LIVE_FEEDS.LOG
             </h3>
             <a href="https://x.com/zalotlgames" target="_blank" rel="noreferrer" className="retro-btn" style={{ padding: '8px 16px' }}>
               FOLLOW @ZALOTLGAMES
@@ -71,7 +71,7 @@ export default function ComingSoon() {
             minHeight: '500px',
             overflow: 'hidden'
           }}>
-            <a className="twitter-timeline"
+            <a className="x-timeline"
               href="https://x.com/zalotlgames"
               data-theme="dark"
               data-tweet-limit="6"
@@ -87,7 +87,7 @@ export default function ComingSoon() {
             color: 'var(--text)', 
             marginBottom: '1rem',
             fontSize: '1.5rem'
-          }}>👥 TEAM_ROSTER.DAT</h3>
+          }}> TEAM_ROSTER.DAT</h3>
 
           <div className="team-card">
             <div style={{ 
@@ -100,7 +100,7 @@ export default function ComingSoon() {
                   color: 'var(--accent)',
                   fontSize: '1.1rem'
                 }}>Herson Hernandez</strong><br />
-                <span style={{ color: 'var(--text)' }}>Programmer • Game Designer • Sound Engineer</span>
+                <span style={{ color: 'var(--text)' }}>Lead Programmer • Game Designer • Sound Engineer • Game Artist</span>
               </div>
 
               <div style={{ borderBottom: '1px dashed var(--border-dim)', paddingBottom: '1rem' }}>
@@ -116,6 +116,7 @@ export default function ComingSoon() {
                   color: 'var(--accent)',
                   fontSize: '1.1rem'
                 }}>Playtesters</strong><br />
+                <span style={{ color: 'var(--text-secondary)' }}>[E1000],</span>
                 <span style={{ color: 'var(--text-secondary)' }}>[RECRUITING...]</span>
               </div>
             </div>

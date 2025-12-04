@@ -20,9 +20,9 @@ export default function About() {
           margin: '1.5rem 0 1rem 0',
           fontSize: '2rem',
           animation: 'textFlash 4s infinite'
-        }}>About Zalotl Games</h1>
+        }}>About Zalotl Games™</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.8 }}>
-          Founded in 2025, Zalotl Games is a solo studio collaborating with talented developers on developing.
+          Founded in 2025, Zalotl Games™ is a solo studio collaborating with talented developers to create games.
         </p>        
         <section style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '2px dashed var(--border-dim)' }}>
           <h2 style={{ 
@@ -45,7 +45,7 @@ export default function About() {
           <ul className="retro-list">
             <li><a href="https://instagram.com/zalotlgames" target="_blank" rel="noopener noreferrer">instagram.com/zalotlgames</a></li>
             <li><a href="https://tiktok.com/@zalotlgames" target="_blank" rel="noopener noreferrer">tiktok.com/@zalotlgames</a></li>
-            <li><a href="https://twitter.com/zalotlgames" target="_blank" rel="noopener noreferrer">twitter.com/zalotlgames</a></li>
+            <li><a href="https://x.com/zalotlgames" target="_blank" rel="noopener noreferrer">x.com/zalotlgames</a></li>
             <li><a href="https://reddit.com/u/zalotlgames" target="_blank" rel="noopener noreferrer">reddit.com/u/zalotlgames</a></li>
           </ul>
         </section>
