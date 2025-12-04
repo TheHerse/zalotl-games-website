@@ -7,7 +7,6 @@ export default function GlitchTab({ id, title, message, initialPosition, onClose
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const tabRef = useRef(null);
 
-  // Helper to handle both mouse and touch
   const getClientPos = (e) => {
     if (e.touches && e.touches.length > 0) {
       return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -16,7 +15,6 @@ export default function GlitchTab({ id, title, message, initialPosition, onClose
   };
 
   const handleStart = (e) => {
-    // Prevent scrolling on touch
     if (e.type.includes('touch')) {
       e.preventDefault();
     }
@@ -49,10 +47,8 @@ export default function GlitchTab({ id, title, message, initialPosition, onClose
 
   useEffect(() => {
     if (isDragging) {
-      // Mouse events
       document.addEventListener('mousemove', handleMove);
       document.addEventListener('mouseup', handleEnd);
-      // Touch events
       document.addEventListener('touchmove', handleMove, { passive: false });
       document.addEventListener('touchend', handleEnd);
       
@@ -77,7 +73,7 @@ export default function GlitchTab({ id, title, message, initialPosition, onClose
         cursor: isDragging ? 'grabbing' : 'grab',
         position: 'fixed',
         zIndex: 1000,
-        userSelect: 'none' // Prevent text selection while dragging
+        userSelect: 'none'
       }}
       onMouseDown={handleStart}
       onTouchStart={handleStart}

@@ -48,20 +48,15 @@ export default function ComingSoon() {
         </header>
 
         <section>
-          <div style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'space-between', 
+          {/* REMOVED: Button and flex container */}
+          <h3 style={{ 
+            color: 'var(--text)', 
+            fontSize: '1.2rem',
             marginBottom: '1.5rem',
-            padding: '0 0.5rem'
+            textAlign: 'center'
           }}>
-            <h3 style={{ color: 'var(--text)', fontSize: '1.2rem' }}>
-              LIVE_FEEDS.LOG
-            </h3>
-            <a href="https://x.com/zalotlgames" target="_blank" rel="noreferrer" className="retro-btn" style={{ padding: '8px 16px' }}>
-              FOLLOW @ZALOTLGAMES
-            </a>
-          </div>
+            LIVE_FEEDS.LOG
+          </h3>
           
           <div style={{ 
             background: 'var(--bg-secondary)', 
@@ -70,7 +65,7 @@ export default function ComingSoon() {
             padding: '1rem', 
             minHeight: '500px',
             overflow: 'hidden',
-            maxWidth: '100%' // Prevent mobile overflow
+            maxWidth: '100%'
           }}>
             <a className="x-timeline"
               href="https://x.com/zalotlgames"
