@@ -10,12 +10,14 @@
   --border: #0088ff;
   --border-dim: #003366;
   --window-header: #0a0a0a;
+  --flash-slow: 6s; /* FIX: Missing variable */
+  --flash-fast: 2s; /* FIX: Missing variable */
 }
 
 * {
   box-sizing: border-box;
-  image-rendering: pixelated;
-  font-family: 'Courier New', monospace;
+  /* REMOVED: image-rendering: pixelated; - Causes mobile bugs */
+  font-family: 'JetBrains Mono', 'Courier New', monospace; /* FIX: Use imported font */
 }
 
 body {
@@ -25,7 +27,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Scanlines */
+/* Scanlines - DISABLED ON MOBILE */
 body::before {
   content: "";
   position: fixed;
@@ -39,7 +41,7 @@ body::before {
     transparent 2px
   );
   pointer-events: none;
-  z-index: 999;
+  z-index: 1; /* FIX: Lowered from 999 */
   animation: scanline 0.3s linear infinite;
 }
 
@@ -48,7 +50,7 @@ body::before {
   100% { transform: translateY(4px); }
 }
 
-/* INTENSE SHAKE - NO ROTATION */
+/* INTENSE SHAKE */
 @keyframes shake {
   0%, 100% { transform: translate(0, 0); }
   10% { transform: translate(-6px, -4px); }
@@ -101,7 +103,7 @@ body::before {
   border: 2px solid var(--border);
   border-radius: 0;
   box-shadow: 0 0 15px var(--accent-glow), inset 0 0 15px rgba(0, 136, 255, 0.1);
-  animation: flash var(--flash-slow) infinite;
+  animation: flash var(--flash-slow, 6s) infinite; /* FIX: Fallback */
   background: var(--bg);
   position: relative;
   overflow: hidden;
@@ -131,7 +133,7 @@ body::before {
 .title-bar-btn:hover {
   background: var(--accent);
   box-shadow: 0 0 5px var(--accent-glow);
-  animation: shake 0.15s infinite; /* FAST SHAKE */
+  animation: shake 0.15s infinite;
 }
 
 /* Browser tabs */
@@ -153,13 +155,13 @@ body::before {
 .browser-tab.active {
   color: var(--text);
   background: var(--bg);
-  animation: textFlash var(--flash-slow) infinite, misalign 10s infinite;
+  animation: textFlash var(--flash-slow, 6s) infinite, misalign 10s infinite;
 }
 
 .browser-tab:hover:not(.active) {
   color: var(--accent);
   border-color: var(--accent);
-  animation: shake 0.2s infinite; /* FAST SHAKE */
+  animation: shake 0.2s infinite;
 }
 
 /* Buttons */
@@ -182,7 +184,7 @@ body::before {
   background: var(--accent);
   color: var(--bg);
   box-shadow: 0 4px 0 var(--accent), 0 0 20px var(--accent-glow);
-  animation: shake 0.12s infinite; /* VERY FAST SHAKE */
+  animation: shake 0.12s infinite;
 }
 
 .retro-btn:active { top: 4px; box-shadow: 0 0 0 var(--border-dim); }
@@ -193,7 +195,7 @@ body::before {
   border: 2px solid var(--border);
   padding: 20px;
   box-shadow: 0 0 15px var(--accent-glow);
-  animation: flash var(--flash-slow) infinite;
+  animation: flash var(--flash-slow, 6s) infinite;
 }
 
 /* Glitch tabs */
@@ -238,7 +240,7 @@ body::before {
 .glitch-tab-close:hover {
   background: var(--accent);
   color: var(--bg);
-  animation: shake 0.1s infinite; /* EXTREME SHAKE */
+  animation: shake 0.1s infinite;
 }
 
 .glitch-tab-content {
@@ -262,7 +264,7 @@ body::before {
   border: 2px solid var(--border);
   padding: 1.5rem;
   border-radius: 8px;
-  animation: flash var(--flash-slow) infinite;
+  animation: flash var(--flash-slow, 6s) infinite;
 }
 
 /* Links */
@@ -274,7 +276,7 @@ a {
 a:hover {
   color: var(--text);
   text-shadow: 0 0 10px var(--accent-glow);
-  animation: shake 0.15s infinite; /* FAST SHAKE */
+  animation: shake 0.15s infinite;
 }
 
 /* Lists */
@@ -302,84 +304,56 @@ ul.retro-list li::before {
   animation: textFlash 1s infinite;
 }
 
-/* Pixel cursor */
+/* Pixel cursor - FIX: Removed invalid URL */
 body {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect x="0" y="0" width="10" height="10" fill="%230088ff"/></svg>'), auto;
+  cursor: crosshair;
 }
 
-/* ===== MOBILE RESPONSIVENESS ===== */
-/* Viewport meta tag needed in your index.html: <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
-
+/* ===== MOBILE FIXES (Critical) ===== */
 @media (max-width: 768px) {
+  /* DISABLE performance killers */
+  body::before {
+    display: none !important;
+  }
+  
   .glitch-tab {
-    width: 200px !important;
-    font-size: 10px;
+    display: none !important;
   }
   
-  .glitch-tab-content {
-    min-height: 40px;
+  /* REDUCE animations */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
   
-  .glitch-tab-close {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .browser-tab {
-    padding: 6px 12px;
-    font-size: 12px;
-    margin-right: 2px;
-  }
-  
+  /* FIX spacing */
   main {
     padding: 1rem !important;
-  }
-  
-  .retro-btn {
-    padding: 12px 24px;
-    min-height: 44px;
-  }
-  
-  h1 {
-    font-size: 1.8rem !important;
-  }
-  
-  h2 {
-    font-size: 1.3rem !important;
-  }
-  
-  .browser-tab {
-    white-space: nowrap;
-  }
-  
-  img {
-    max-width: 300px !important;
-  }
-  
-  body::before {
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 136, 255, 0.05),
-      rgba(0, 136, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-  }
-}
-
-@media (max-width: 480px) {
-  .glitch-tab {
-    width: 160px !important;
   }
   
   .window-frame {
     padding: 15px !important;
   }
   
-  .retro-card {
-    padding: 15px !important;
+  /* PREVENT overflow */
+  img {
+    max-width: 100% !important;
+  }
+  
+  /* BIGGER touch targets */
+  .retro-btn {
+    min-height: 44px;
+    padding: 12px 24px;
+  }
+  
+  .browser-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  /* SCALE text */
+  h1 {
+    font-size: 1.8rem !important;
   }
 }
