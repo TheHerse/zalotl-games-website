@@ -9,6 +9,7 @@ export default function Navbar() {
       background: 'var(--bg)',
       padding: '10px 20px 0 20px',
       overflowX: 'auto',
+      overflowY: 'hidden', /* ADD THIS */
       WebkitOverflowScrolling: 'touch'
     }}>
       <div style={{ 
