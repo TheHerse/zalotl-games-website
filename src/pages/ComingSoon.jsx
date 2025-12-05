@@ -187,7 +187,7 @@ export default function ComingSoon() {
                   fontSize: '1.1rem'
                 }}>Playtesters</strong><br />
                 <span style={{ color: 'var(--text-secondary)' }}>[E1000],</span>
-                <span style={{ color: 'var(--text-secondary)' }}>[jermx2000 ],</span>
+                <span style={{ color: 'var(--text-secondary)' }}>[Jermx2000],</span>
                 <span style={{ color: 'var(--text-secondary)' }}>[RECRUITING...]</span>
               </div>
             </div>
